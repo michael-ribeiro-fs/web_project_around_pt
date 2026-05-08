@@ -25,9 +25,90 @@ let initialCards = [
   },
 ];
 
-initialCards.forEach(function (item) {
-  console.log(item.name);
+const cardTemplate = document.querySelector("#cards__template");
+const cardsContainer = document.querySelector(".cards__list");
+
+const popupImage = document.querySelector("#image-popup");
+const modalImage = document.querySelector(".popup__image");
+const modalLegend = document.querySelector(".popup__caption");
+const popupClose = popupImage.querySelector(".popup__close");
+
+popupClose.addEventListener("click", function () {
+  closeModal(popupImage);
 });
+
+function getCardElement(
+  name = "Lugar sem nome",
+  link = "./images/placeholder.jpg",
+) {
+  const cardElement = cardTemplate.content.cloneNode(true);
+  const cardTitle = cardElement.querySelector(".card__title");
+  const cardImage = cardElement.querySelector(".card__image");
+  const cardLikeButton = cardElement.querySelector(".card__like-button");
+  const cardDeleteButton = cardElement.querySelector(".card__delete-button");
+
+  cardLikeButton.addEventListener("click", function () {
+    cardLikeButton.classList.toggle("card__like-button_is-active");
+  });
+
+  cardDeleteButton.addEventListener("click", function () {
+    cardDeleteButton.closest(".card").remove();
+  });
+
+  cardImage.addEventListener("click", function () {
+    modalImage.src = link;
+    modalImage.alt = name;
+    modalLegend.textContent = name;
+    openModal(popupImage);
+  });
+
+  cardTitle.textContent = name;
+  cardImage.src = link;
+  cardImage.alt = name;
+
+  return cardElement;
+}
+
+function renderCard(name, link, cardsContainer) {
+  const card = getCardElement(name, link);
+  cardsContainer.prepend(card);
+}
+
+initialCards.forEach(function (item) {
+  renderCard(item.name, item.link, cardsContainer);
+});
+
+const newCardPopup = document.querySelector("#new-card-popup");
+const addCardButton = document.querySelector(".profile__add-button");
+const newCardForm = document.querySelector("#new-card-form");
+const cardTitleInput = document.querySelector(".popup__input_type_card-name");
+const cardLinkInput = document.querySelector(".popup__input_type_url");
+const closeNewCardPopupButton = document.querySelector(
+  "#new-card-popup .popup__close",
+);
+
+addCardButton.addEventListener("click", function () {
+  openModal(newCardPopup);
+});
+
+closeNewCardPopupButton.addEventListener("click", function () {
+  closeModal(newCardPopup);
+});
+
+function handleCardFormSubmit(event) {
+  event.preventDefault();
+
+  const titleInput = cardTitleInput.value;
+  const linkInput = cardLinkInput.value;
+
+  renderCard(titleInput, linkInput, cardsContainer);
+
+  closeModal(newCardPopup);
+
+  newCardForm.reset();
+}
+
+newCardForm.addEventListener("submit", handleCardFormSubmit);
 
 const editPopup = document.querySelector("#edit-popup");
 const profileEditButton = document.querySelector(".profile__edit-button");
