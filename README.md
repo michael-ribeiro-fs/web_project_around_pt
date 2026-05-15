@@ -18,6 +18,8 @@ Usuários que viajam pelo território americano não possuem um espaço simples,
 - 🗑️ **Remover** fotos que não desejam mais exibir
 - ❤️ **Curtir** as fotos favoritas da galeria
 - ✏️ **Editar** o perfil do usuário com nome e descrição
+- ✅ **Validar** formulários em tempo real com feedback instantâneo
+- ⌨️ **Fechar pop-ups** clicando fora (overlay) ou pressionando a tecla ESC
 
 Tudo isso em uma interface limpa, focada na experiência visual, sem ruídos ou distrações.
 
@@ -45,7 +47,8 @@ around-the-us/
 │   └── index.css         # Ponto de entrada CSS (importa todos os blocos)
 │
 ├── scripts/
-│   └── index.js          # Lógica interativa (adicionar, remover, curtir)
+│   ├── index.js          # Lógica interativa (adicionar, remover, curtir)
+│   └── validate.js       # Validação de formulários (Sprint 9)
 │
 ├── vendor/               # Dependências externas
 │   ├── fonts/            # Fonte Inter (Black, Medium, Regular)
@@ -59,15 +62,28 @@ around-the-us/
 
 ## Decisões Técnicas 🧠
 
-| Decisão                 | Justificativa                                                                                                                             |
-| ----------------------- | ----------------------------------------------------------------------------------------------------------------------------------------- |
-| **HTML Semântico**      | Tags como `<section>`, `<article>`, `<header>` e `<footer>` melhoram o SEO e a acessibilidade da página para leitores de tela             |
-| **CSS Grid Layout**     | Permite criar a galeria de fotos de forma responsiva e flexível, adaptando automaticamente o número de colunas conforme o tamanho da tela |
-| **Metodologia BEM**     | Cada bloco CSS é isolado e independente, facilitando manutenção e evitando conflitos de estilos                                           |
-| **Vanilla JavaScript**  | Sem dependências externas de frameworks — mantém o projeto leve e demonstra domínio dos fundamentos do JS                                 |
-| **Fonte Inter (local)** | Carregada via `@font-face` com arquivos `.woff2`, eliminando a dependência de CDNs externas e melhorando a performance                    |
-| **SVGs para ícones**    | Ícones vetoriais garantem nitidez em qualquer resolução de tela sem custo de carregamento adicional                                       |
-| **normalize.css**       | Garante consistência visual entre diferentes navegadores sem resetar todos os estilos                                                     |
+| Decisão                         | Justificativa                                                                                                                              |
+| ------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------ |
+| **HTML Semântico**              | Tags como `<section>`, `<article>`, `<header>` e `<footer>` melhoram o SEO e a acessibilidade da página para leitores de tela              |
+| **CSS Grid Layout**             | Permite criar a galeria de fotos de forma responsiva e flexível, adaptando automaticamente o número de colunas conforme o tamanho da tela  |
+| **Metodologia BEM**             | Cada bloco CSS é isolado e independente, facilitando manutenção e evitando conflitos de estilos                                            |
+| **Vanilla JavaScript**          | Sem dependências externas de frameworks — mantém o projeto leve e demonstra domínio dos fundamentos do JS                                  |
+| **Validação nativa HTML5 + JS** | Utiliza `required`, `minlength`, `maxlength`, `type="url"` e a propriedade `ValidityState` para feedback imediato sem bibliotecas externas |
+| **Fechamento de pop-ups**       | Clicar fora (overlay) ou tecla ESC para melhor experiência do usuário e acessibilidade                                                     |
+| **Fonte Inter (local)**         | Carregada via `@font-face` com arquivos `.woff2`, eliminando a dependência de CDNs externas e melhorando a performance                     |
+| **SVGs para ícones**            | Ícones vetoriais garantem nitidez em qualquer resolução de tela sem custo de carregamento adicional                                        |
+| **normalize.css**               | Garante consistência visual entre diferentes navegadores sem resetar todos os estilos                                                      |
+
+---
+
+## Novas Funcionalidades ✨
+
+- ✅ **Validação em tempo real** dos formulários "Editar Perfil" e "Novo Local"
+- ✅ **Botão de envio desativado** enquanto houver campos inválidos
+- ✅ **Mensagens de erro padrão do navegador** para feedback consistente
+- ✅ **Fechar pop-up ao clicar fora** (na sobreposição escura)
+- ✅ **Fechar pop-up com a tecla ESC** para melhor acessibilidade
+- ✅ **Reset automático da validação** ao reabrir formulários
 
 ---
 
@@ -98,6 +114,19 @@ cd web_project_around_pt
 
 ---
 
+## Validação dos Formulários 📝
+
+| Campo                           | Regras de Validação             |
+| ------------------------------- | ------------------------------- |
+| **Nome** (Editar Perfil)        | Obrigatório, 2 a 40 caracteres  |
+| **Sobre** (Editar Perfil)       | Obrigatório, 2 a 200 caracteres |
+| **Título** (Novo Local)         | Obrigatório, 2 a 30 caracteres  |
+| **Link da Imagem** (Novo Local) | Obrigatório, URL válida         |
+
+Todos os campos utilizam mensagens de erro padrão do navegador e o botão de envio permanece desativado até que todos os campos estejam válidos.
+
+---
+
 ## Próximos Passos 🔮
 
 - [ ] 🔐 Adicionar autenticação de usuário com JWT
@@ -113,3 +142,7 @@ cd web_project_around_pt
 ## Repositório 🔗
 
 [github.com/michael-ribeiro-fs/web_project_around_pt](https://github.com/michael-ribeiro-fs/web_project_around_pt)
+
+```
+
+```
