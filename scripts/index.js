@@ -125,33 +125,27 @@ editForm.addEventListener("submit", handleProfileFormSubmit);
 
 function openModal(modal) {
   const form = modal.querySelector(".popup__form");
-  if (form && window.resetValidation) {
+  if (form && modal !== editPopup) {
+    form.reset();
     resetValidation(form);
   }
 
   modal.classList.add("popup_is-opened");
 
-  //Fechar ao clicar no fundo escuro
   function handleOverlayClick(event) {
-    //Click no fundo escuro?
     if (event.target === modal) {
-      //Então feche o popup
       closeModal(modal);
     }
   }
 
-  //Ouvir clique
   modal.addEventListener("click", handleOverlayClick);
 
-  //Função no popup é função
   modal.handleOverlayClick = handleOverlayClick;
 
-  //Em todo documento, se uma tecla for clicada, execute a função handleEscClose
   document.addEventListener("keydown", handleEscClose);
 }
 
 function closeModal(modal) {
-  //Removendo ouvinte de fechamento do popup ao clicar fora
   if (modal.handleOverlayClick) {
     modal.removeEventListener("click", modal.handleOverlayClick);
     delete modal.handleOverlayClick;
@@ -159,7 +153,6 @@ function closeModal(modal) {
 
   modal.classList.remove("popup_is-opened");
 
-  //Remove o ouvinte de tecla
   document.removeEventListener("keydown", handleEscClose);
 }
 
@@ -183,9 +176,7 @@ function handleProfileFormSubmit(event) {
 }
 
 function handleEscClose(event) {
-  //Se a tecla pressionada for ESC
   if (event.key === "Escape") {
-    //Qual Popup está aberto? Feche-o
     const opendPopup = document.querySelector(".popup_is-opened");
     if (opendPopup) {
       closeModal(opendPopup);
