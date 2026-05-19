@@ -142,7 +142,3 @@ Todos os campos utilizam mensagens de erro padrão do navegador e o botão de en
 ## Repositório 🔗
 
 [github.com/michael-ribeiro-fs/web_project_around_pt](https://github.com/michael-ribeiro-fs/web_project_around_pt)
-
-```
-
-```
