@@ -2,6 +2,12 @@ class FormValidator {
   constructor(settings, formElement) {
     this._settings = settings;
     this._form = formElement;
+    this._inputList = Array.from(
+      this._form.querySelectorAll(this._settings.inputSelector),
+    );
+    this._buttonElement = this._form.querySelector(
+      this._settings.submitButtonSelector,
+    );
   }
 
   _showInputError(inputElement, errorMessage) {
@@ -31,50 +37,36 @@ class FormValidator {
     }
   }
 
-  _hasInvalidInput(inputList) {
-    return inputList.some((inputElement) => {
+  _hasInvalidInput() {
+    return this._inputList.some((inputElement) => {
       return !inputElement.validity.valid;
     });
   }
 
-  _toggleButtonState(inputList, buttonElement) {
-    if (this._hasInvalidInput(inputList)) {
-      buttonElement.classList.add(this._settings.inactiveButtonClass);
-      buttonElement.disabled = true;
+  _toggleButtonState() {
+    if (this._hasInvalidInput()) {
+      this._buttonElement.classList.add(this._settings.inactiveButtonClass);
+      this._buttonElement.disabled = true;
     } else {
-      buttonElement.classList.remove(this._settings.inactiveButtonClass);
-      buttonElement.disabled = false;
+      this._buttonElement.classList.remove(this._settings.inactiveButtonClass);
+      this._buttonElement.disabled = false;
     }
   }
 
   setEventListeners() {
-    const inputList = Array.from(
-      this._form.querySelectorAll(this._settings.inputSelector),
-    );
+    this._toggleButtonState(); // não passa parâmetros
 
-    const buttonElement = this._form.querySelector(
-      this._settings.submitButtonSelector,
-    );
-
-    this._toggleButtonState(inputList, buttonElement);
-
-    inputList.forEach((inputElement) => {
+    this._inputList.forEach((inputElement) => {
       inputElement.addEventListener("input", () => {
         this._checkInputValidity(inputElement);
-        this._toggleButtonState(inputList, buttonElement);
+        this._toggleButtonState(); // não passa parâmetros
       });
     });
   }
 
   resetValidation() {
-    const inputList = Array.from(
-      this._form.querySelectorAll(this._settings.inputSelector),
-    );
-    const buttonElement = this._form.querySelector(
-      this._settings.submitButtonSelector,
-    );
-    inputList.forEach((input) => this._hideInputError(input));
-    this._toggleButtonState(inputList, buttonElement);
+    this._inputList.forEach((input) => this._hideInputError(input));
+    this._toggleButtonState();
   }
 }
 

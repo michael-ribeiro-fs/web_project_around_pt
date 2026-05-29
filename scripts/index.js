@@ -1,6 +1,6 @@
 import Card from "./Card.js";
 import FormValidator from "./FormValidator.js";
-import { openModal, closeModal, handleEscClose } from "./utils.js";
+import { openModal, closeModal } from "./utils.js";
 
 const settings = {
   formSelector: ".popup__form",
@@ -43,7 +43,7 @@ const cardsContainer = document.querySelector(".cards__list");
 const popupImage = document.querySelector("#image-popup");
 const modalImage = document.querySelector(".popup__image");
 const modalLegend = document.querySelector(".popup__caption");
-const popupClose = popupImage.querySelector(".popup__close");
+const closeImagePopupButton = popupImage.querySelector(".popup__close");
 
 const newCardPopup = document.querySelector("#new-card-popup");
 const addCardButton = document.querySelector(".profile__add-button");
@@ -61,14 +61,14 @@ const profileAbout = document.querySelector(".profile__description");
 const editForm = document.querySelector("#edit-profile-form");
 const nameInput = editPopup.querySelector(".popup__input_type_name");
 const aboutInput = editPopup.querySelector(".popup__input_type_description");
-const closeButton = editPopup.querySelector(".popup__close");
+const closeEditPopupButton = editPopup.querySelector(".popup__close");
 
 function setupCloseButtons() {
-  popupClose.addEventListener("click", () => closeModal(popupImage));
+  closeImagePopupButton.addEventListener("click", () => closeModal(popupImage));
   closeNewCardPopupButton.addEventListener("click", () =>
     closeModal(newCardPopup),
   );
-  closeButton.addEventListener("click", () => closeModal(editPopup));
+  closeEditPopupButton.addEventListener("click", () => closeModal(editPopup));
 }
 
 setupCloseButtons();
@@ -88,22 +88,18 @@ initialCards.forEach((item) => {
 function handleCardFormSubmit(event) {
   event.preventDefault();
 
-  try {
-    const titleInput = cardTitleInput.value;
-    const linkInput = cardLinkInput.value;
+  const titleInput = cardTitleInput.value;
+  const linkInput = cardLinkInput.value;
 
-    const card = new Card(
-      { name: titleInput, link: linkInput },
-      "#cards__template",
-      handleCardImageClick,
-    );
+  const card = new Card(
+    { name: titleInput, link: linkInput },
+    "#cards__template",
+    handleCardImageClick,
+  );
 
-    cardsContainer.prepend(card.generateCard());
-    closeModal(newCardPopup);
-    newCardForm.reset();
-  } catch (error) {
-    console.error("Erro ao criar cartão:", error);
-  }
+  cardsContainer.prepend(card.generateCard());
+  closeModal(newCardPopup);
+  newCardForm.reset();
 }
 
 newCardForm.addEventListener("submit", handleCardFormSubmit);

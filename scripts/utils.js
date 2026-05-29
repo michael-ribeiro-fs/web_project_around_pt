@@ -34,4 +34,4 @@ function handleEscClose(event) {
   }
 }
 
-export { openModal, closeModal, handleEscClose };
+export { openModal, closeModal };
