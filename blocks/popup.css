@@ -60,6 +60,14 @@
   padding: 34px 36px;
 }
 
+#avatar-popup .popup__content {
+  min-height: 272px;
+}
+
+#confirmation-popup .popup__content {
+  min-height: 181px;
+}
+
 .popup__form {
   margin-top: 27px;
 }

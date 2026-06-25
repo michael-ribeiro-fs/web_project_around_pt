@@ -1,19 +1,44 @@
 class Card {
-  constructor(data, cardSelector, handleImageClick) {
+  constructor(data, cardSelector, handleImageClick, confirmPopup, api, userId) {
     this._name = data.name;
     this._link = data.link;
     this._cardSelector = cardSelector;
     this._handleImageClickCallback = handleImageClick;
+    this._confirmPopup = confirmPopup;
+    this._api = api;
+
+    this._id = data._id;
+    this._ownerId = data.owner._id || data.owner;
+    this._userId = userId;
+    this._isLiked = data.isLiked;
   }
 
   _handleLikeClick() {
-    this._likeButton.classList.toggle("card__like-button_is-active");
+    const method = this._isLiked ? "unlikeCard" : "likeCard";
+
+    this._api[method](this._id)
+      .then((updatedCard) => {
+        this._isLiked = updatedCard.isLiked;
+        this._likeButton.classList.toggle("card__like-button_is-active");
+      })
+      .catch((err) => {
+        console.error("Erro ao curtir/descurtir:", err);
+      });
   }
 
   _handleDeleteClick() {
-    if (confirm("Tem certeza que deseja excluir este cartão?")) {
-      this._element.closest(".card").remove();
-    }
+    this._confirmPopup.setSubmitAction(() => {
+      this._api
+        .deleteCard(this._id)
+        .then(() => {
+          this._element.remove();
+          this._confirmPopup.close();
+        })
+        .catch((err) => {
+          console.error("Erro ao excluir cartão:", err);
+        });
+    });
+    this._confirmPopup.open();
   }
 
   _handleImageClick() {
@@ -41,7 +66,16 @@ class Card {
     this._element = this._getTemplate();
 
     this._likeButton = this._element.querySelector(".card__like-button");
+    if (this._isLiked) {
+      this._likeButton.classList.add("card__like-button_is-active");
+    }
+
     this._cardImage = this._element.querySelector(".card__image");
+
+    const deleteButton = this._element.querySelector(".card__delete-button");
+    if (this._ownerId !== this._userId) {
+      deleteButton.remove();
+    }
 
     this._setEventListeners();
     this._element.querySelector(".card__title").textContent = this._name;

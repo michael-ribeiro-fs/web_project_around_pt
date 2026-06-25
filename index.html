@@ -18,7 +18,20 @@
       </header>
       <main class="content">
         <section class="profile page__section">
-          <img class="profile__image" src="./images/avatar.jpg" alt="Avatar" />
+          <div class="profile__avatar-container">
+            <img
+              class="profile__image"
+              src="./images/avatar.jpg"
+              alt="Avatar"
+            />
+            <div class="profile__avatar-edit-overlay">
+              <img
+                src="./images/edit-icon.svg"
+                alt="Editar avatar"
+                class="profile__avatar-edit-icon"
+              />
+            </div>
+          </div>
           <div class="profile__info">
             <h1 class="profile__title">Jacques Cousteau</h1>
             <button
@@ -53,9 +66,7 @@
               </div>
             </li>
           </template>
-          <ul class="cards__list">
-            <!--O UL está vazio aqui------------------------>
-          </ul>
+          <ul class="cards__list"></ul>
         </section>
       </main>
       <footer class="footer page__section">
@@ -134,6 +145,36 @@
           ></button>
           <img alt="" class="popup__image" src="#" />
           <p class="popup__caption"></p>
+        </div>
+      </div>
+      <div class="popup" id="avatar-popup">
+        <div class="popup__content">
+          <button
+            aria-label="Fechar pop-up"
+            class="popup__close"
+            type="button"
+          ></button>
+          <h3 class="popup__title">Alterar foto de perfil</h3>
+          <form class="popup__form" id="avatar-form">
+            <input
+              class="popup__input popup__input_type_avatar"
+              name="avatar"
+              placeholder="Link da nova foto"
+              type="url"
+              required
+            />
+            <span class="popup__error popup__error_type_avatar"></span>
+            <button class="button popup__button" type="submit">Salvar</button>
+          </form>
+        </div>
+      </div>
+      <div class="popup" id="confirmation-popup">
+        <div class="popup__content">
+          <button class="popup__close" type="button"></button>
+          <h3 class="popup__title">Tem certeza?</h3>
+          <form class="popup__form">
+            <button class="button popup__button" type="submit">Sim</button>
+          </form>
         </div>
       </div>
     </div>
