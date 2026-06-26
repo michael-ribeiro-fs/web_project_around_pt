@@ -3,7 +3,7 @@
   Galeria fotográfica interativa para compartilhar, curtir e gerenciar lugares favoritos, com dados persistidos via API REST.
 
 <p align="center">
-  <a href="https://michael-ribeiro-fs.github.io/web_project_around_pt/" target="_blank">
+  <a href="https://michael-ribeiro-fs.github.io/web_project_around_pt/src" target="_blank">
     <img src="https://img.shields.io/badge/🚀%20Ver%20Deploy-Live-brightgreen?style=for-the-badge" alt="Ver Deploy">
   </a>
 </p>
@@ -67,7 +67,7 @@ cd web_project_around_pt
 
 ## 📝 Licença
 
-Distribuído sob a licença [Própria]
+Software Próprio
 
 ## 👤 Autor
 
