@@ -10,7 +10,7 @@
 
 ## 🎬 Demonstração
 
-<a href="https://youtu.be/dDjAG4mL99I" target="_blank">
+<a href="https://youtu.be/G5R94ymmBZs" target="_blank">
   <img src="https://img.youtube.com/vi/dDjAG4mL99I/maxresdefault.jpg" alt="Assista à demonstração no YouTube" width="50%">
 </a>
 
