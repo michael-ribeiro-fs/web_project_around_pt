@@ -54,14 +54,17 @@ const cardSection = new Section(
 const userInfo = new UserInfo({
   nameSelector: ".profile__title",
   jobSelector: ".profile__description",
+  avatarSelector: ".profile__image",
 });
 
 Promise.all([api.getUserInfo(), api.getInitialCards()])
   .then(([userData, cardsData]) => {
     userId = userData._id;
-    userInfo.setUserInfo({ name: userData.name, job: userData.about });
-
-    document.querySelector(".profile__image").src = userData.avatar;
+    userInfo.setUserInfo({
+      name: userData.name,
+      job: userData.about,
+      avatar: userData.avatar,
+    });
 
     cardsData.forEach((card) => createCard(card));
   })
@@ -130,8 +133,9 @@ const avatarPopup = new PopupWithForm("#avatar-popup", ({ avatar }) => {
   return api
     .editAvatar(avatar)
     .then((updateUser) => {
-      const avatarImage = document.querySelector(".profile__image");
-      avatarImage.src = updateUser.avatar;
+      userInfo.setUserInfo({
+        avatar: updateUser.avatar,
+      });
     })
     .catch((err) => {
       console.log("Erro ao atualizar avatar:", err);
@@ -141,9 +145,10 @@ const avatarPopup = new PopupWithForm("#avatar-popup", ({ avatar }) => {
 
 avatarPopup.setEventListeners();
 
+const avatarForm = document.querySelector("#avatar-form");
+
 const avatarImage = document.querySelector(".profile__avatar-container");
 avatarImage.addEventListener("click", () => {
-  const avatarForm = document.querySelector("#avatar-form");
   avatarForm.reset();
   if (avatarFormValidator) {
     avatarFormValidator.resetValidation();
@@ -151,7 +156,6 @@ avatarImage.addEventListener("click", () => {
   avatarPopup.open();
 });
 
-const avatarForm = document.querySelector("#avatar-form");
 const avatarFormValidator = new FormValidator(settings, avatarForm);
 avatarFormValidator.setEventListeners();
 
